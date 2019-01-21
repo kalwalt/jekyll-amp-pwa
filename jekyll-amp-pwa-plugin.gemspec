@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'jekyll-pwa-plugin'
+  s.name        = 'jekyll-amp-pwa-plugin'
   s.version     = '2.1.2'
   s.date        = '2018-09-03'
   s.summary     = "PWA support for Jekyll."

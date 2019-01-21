@@ -21,7 +21,7 @@ This plugin is available as a [RubyGem][ruby-gem].
 
 ### Option #1
 
-Add `gem 'jekyll-pwa-plugin'` to the `jekyll_plugin` group in your `Gemfile`:
+Add `gem 'jekyll-amp-pwa-plugin'` to the `jekyll_plugin` group in your `Gemfile`:
 
 ```ruby
 source 'https://rubygems.org'
@@ -29,7 +29,7 @@ source 'https://rubygems.org'
 gem 'jekyll'
 
 group :jekyll_plugins do
-  gem 'jekyll-pwa-plugin'
+  gem 'jekyll-amp-pwa-plugin'
 end
 ```
 
@@ -40,14 +40,14 @@ Then run `bundle` to install the gem.
 Alternatively, you can also manually install the gem using the following command:
 
 ```
-$ gem install jekyll-pwa-plugin
+$ gem install jekyll-amp-pwa-plugin
 ```
 
 After the plugin has been installed successfully, add the following lines to your `_config.yml` in order to tell Jekyll to use the plugin:
 
 ```
 plugins:
-- jekyll-pwa-plugin
+- jekyll-amp-pwa-plugin
 ```
 
 ## Getting Started
@@ -145,7 +145,7 @@ Fork this repository, make your changes and then issue a pull request. If you fi
 
 # Copyright
 
-Copyright (c) 2017 Pan Yuqi.
+Copyright (c) 2017 Pan Yuqi and @kalwalt (Walter Perdan) for this modified version.
 
 License: MIT
 
