@@ -128,37 +128,9 @@ class SWHelper
         )
         sw_dest_file.close
     end
-
-    def self.insert_sw_register_into_body(page)
-        page.output = page.output.sub('</body>',
-        <<-SCRIPT
-            <script>
-                window.onload = function () {
-                    var script = document.createElement('script');
-                    var firstScript = document.getElementsByTagName('script')[0];
-                    script.type = 'text/javascript';
-                    script.async = true;
-                    script.src = '#{page.site.baseurl.to_s}/sw-register.js?v=' + Date.now();
-                    firstScript.parentNode.insertBefore(script, firstScript);
-                };
-            </script>
-            </body>
-        SCRIPT
-        )
-    end
 end
 
 module Jekyll
-
-    Hooks.register :pages, :post_render do |page|
-        # append <script> for sw-register.js in <body>
-        SWHelper.insert_sw_register_into_body(page)
-    end
-
-    Hooks.register :documents, :post_render do |document|
-        # append <script> for sw-register.js in <body>
-        SWHelper.insert_sw_register_into_body(document)
-    end
 
     Hooks.register :site, :post_write do |site|
         pwa_config = site.config['pwa'] || {}
