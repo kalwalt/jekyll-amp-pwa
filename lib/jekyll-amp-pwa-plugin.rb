@@ -1,5 +1,5 @@
 class SWHelper
-    WORKBOX_VERSION = 'v3.6.2'
+    WORKBOX_VERSION = 'v5.1.4'
     def initialize(site, config)
         @site = site
         @config = config
@@ -21,8 +21,7 @@ class SWHelper
                         switch (installingWorker.state) {
                             case 'installed':
                                 if (navigator.serviceWorker.controller) {
-                                    var event = document.createEvent('Event');
-                                    event.initEvent('sw.update', true, true);
+                                    var event = new Event('sw.update');
                                     window.dispatchEvent(event);
                                 }
                                 break;
@@ -112,7 +111,7 @@ class SWHelper
         # write service-worker.js
         sw_src_file_str = File.read(@site.in_source_dir(@sw_src_filepath))
         workbox_dir = File.join(@site.baseurl.to_s, dest_js_directory, "workbox-#{SWHelper::WORKBOX_VERSION}")
-        import_scripts_str = 
+        import_scripts_str =
         <<-SCRIPT
             importScripts("#{workbox_dir}/workbox-sw.js");
             workbox.setConfig({modulePathPrefix: "#{workbox_dir}"});
@@ -128,9 +127,37 @@ class SWHelper
         )
         sw_dest_file.close
     end
+
+    def self.insert_sw_register_into_body(page)
+        page.output = page.output.sub('</body>',
+        <<-SCRIPT
+            <script>
+                window.onload = function () {
+                    var script = document.createElement('script');
+                    var firstScript = document.getElementsByTagName('script')[0];
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.src = '#{page.site.baseurl.to_s}/sw-register.js?v=' + Date.now();
+                    firstScript.parentNode.insertBefore(script, firstScript);
+                };
+            </script>
+            </body>
+        SCRIPT
+        )
+    end
 end
 
 module Jekyll
+
+    Hooks.register :pages, :post_render do |page|
+        # append <script> for sw-register.js in <body>
+        SWHelper.insert_sw_register_into_body(page)
+    end
+
+    Hooks.register :documents, :post_render do |document|
+        # append <script> for sw-register.js in <body>
+        SWHelper.insert_sw_register_into_body(document)
+    end
 
     Hooks.register :site, :post_write do |site|
         pwa_config = site.config['pwa'] || {}
