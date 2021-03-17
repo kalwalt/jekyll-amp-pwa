@@ -109,7 +109,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest);
 // use `NetworkFirst` strategy for html
 workbox.routing.registerRoute(
     /\.html$/,
-    new workbox.strategies.networkFirst()
+    new workbox.strategies.NetworkFirst()
 );
 
 // use `NetworkFirst` strategy for css and js
