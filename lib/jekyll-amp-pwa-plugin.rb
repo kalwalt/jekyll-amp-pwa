@@ -131,7 +131,7 @@ class SWHelper
     def self.insert_sw_register_into_body(page)
         page.output = page.output.sub('</body>',
         <<-SCRIPT
-            <script>
+            <amp-bind>
                 window.onload = function () {
                     var script = document.createElement('script');
                     var firstScript = document.getElementsByTagName('script')[0];
@@ -140,7 +140,7 @@ class SWHelper
                     script.src = '#{page.site.baseurl.to_s}/sw-register.js?v=' + Date.now();
                     firstScript.parentNode.insertBefore(script, firstScript);
                 };
-            </script>
+            </amp-bind>
             </body>
         SCRIPT
         )
@@ -150,12 +150,12 @@ end
 module Jekyll
 
     Hooks.register :pages, :post_render do |page|
-        # append <script> for sw-register.js in <body>
+        # append  <amp-bind> for sw-register.js in <body>
         SWHelper.insert_sw_register_into_body(page)
     end
 
     Hooks.register :documents, :post_render do |document|
-        # append <script> for sw-register.js in <body>
+        # append   <amp-bind> for sw-register.js in <body>
         SWHelper.insert_sw_register_into_body(document)
     end
 
