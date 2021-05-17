@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'jekyll-amp-pwa-plugin'
-  s.version     = '5.1.5'
+  s.version     = '5.1.4.beta'
   s.date        = '2021-03-16'
   s.summary     = "PWA support for Jekyll."
   s.description = "This plugin provides PWA support for Jekyll with amp. Generate a service worker and provides precache with Google Workbox."
